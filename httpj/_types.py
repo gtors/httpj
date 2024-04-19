@@ -108,7 +108,7 @@ RequestFiles = Union[Mapping[str, FileTypes], Sequence[Tuple[str, FileTypes]]]
 
 RequestExtensions = MutableMapping[str, Any]
 JSONEncoder = Callable[[Any], str | bytes | bytearray]
-JSONDecoder = Callable[[str], Any]
+JSONDecoder = Callable[[str | bytes], Any]
 
 __all__ = ["AsyncByteStream", "SyncByteStream"]
 
