@@ -62,7 +62,8 @@ HeaderTypes = Union[
     Sequence[Tuple[bytes, bytes]],
 ]
 
-CookieTypes = Union["Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]]
+CookieTypes = Union["Cookies", CookieJar,
+                    Dict[str, str], List[Tuple[str, str]]]
 
 CertTypes = Union[
     # certfile
@@ -107,6 +108,8 @@ FileTypes = Union[
 RequestFiles = Union[Mapping[str, FileTypes], Sequence[Tuple[str, FileTypes]]]
 
 RequestExtensions = MutableMapping[str, Any]
+JSONEncoder = Callable[[Any], str | bytes | bytearray]
+JSONDecoder = Callable[[str], Any]
 
 __all__ = ["AsyncByteStream", "SyncByteStream"]
 

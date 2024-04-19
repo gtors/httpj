@@ -34,6 +34,8 @@ from ._types import (
     AsyncByteStream,
     CookieTypes,
     HeaderTypes,
+    JSONDecoder,
+    JSONEncoder,
     QueryParamTypes,
     RequestContent,
     RequestData,
@@ -320,6 +322,7 @@ class Request:
         data: RequestData | None = None,
         files: RequestFiles | None = None,
         json: typing.Any | None = None,
+        json_serialize: JSONEncoder | None = None,
         stream: SyncByteStream | AsyncByteStream | None = None,
         extensions: RequestExtensions | None = None,
     ) -> None:
@@ -333,6 +336,7 @@ class Request:
             self.url = self.url.copy_merge_params(params=params)
         self.headers = Headers(headers)
         self.extensions = {} if extensions is None else extensions
+        self.json_serialize = json_serialize
 
         if cookies:
             Cookies(cookies).set_cookie_header(self)
@@ -344,10 +348,13 @@ class Request:
                 data=data,
                 files=files,
                 json=json,
+                json_serialize=json_serialize,
                 boundary=get_multipart_boundary_from_content_type(
-                    content_type=content_type.encode(self.headers.encoding)
-                    if content_type
-                    else None
+                    content_type=(
+                        content_type.encode(self.headers.encoding)
+                        if content_type
+                        else None
+                    )
                 ),
             )
             self._prepare(headers)
@@ -456,6 +463,8 @@ class Response:
         text: str | None = None,
         html: str | None = None,
         json: typing.Any = None,
+        json_serialize: JSONEncoder | None = None,
+        json_deserialize: JSONDecoder | None = None,
         stream: SyncByteStream | AsyncByteStream | None = None,
         request: Request | None = None,
         extensions: ResponseExtensions | None = None,
@@ -478,9 +487,11 @@ class Response:
         self.is_stream_consumed = False
 
         self.default_encoding = default_encoding
+        self.json_serialize = json_serialize
+        self.json_deserialize = json_deserialize
 
         if stream is None:
-            headers, stream = encode_response(content, text, html, json)
+            headers, stream = encode_response(content, text, html, json, json_serialize)
             self._prepare(headers)
             self.stream = stream
             if isinstance(stream, ByteStream):
@@ -763,7 +774,8 @@ class Response:
         raise HTTPStatusError(message, request=request, response=self)
 
     def json(self, **kwargs: typing.Any) -> typing.Any:
-        return jsonlib.loads(self.content, **kwargs)
+        json_deserialize: JSONDecoder = self.json_deserialize or jsonlib.loads
+        return json_deserialize(self.content, **kwargs)
 
     @property
     def cookies(self) -> Cookies:

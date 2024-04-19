@@ -11,6 +11,8 @@ from ._types import (
     CertTypes,
     CookieTypes,
     HeaderTypes,
+    JSONDecoder,
+    JSONEncoder,
     ProxiesTypes,
     ProxyTypes,
     QueryParamTypes,
@@ -44,6 +46,8 @@ def request(
     data: RequestData | None = None,
     files: RequestFiles | None = None,
     json: typing.Any | None = None,
+    json_serialize: JSONEncoder | None = None,
+    json_deserialize: JSONDecoder | None = None,
     headers: HeaderTypes | None = None,
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
@@ -114,6 +118,8 @@ def request(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_serialize=json_serialize,
+        json_deserialize=json_deserialize,
     ) as client:
         return client.request(
             method=method,
@@ -139,6 +145,8 @@ def stream(
     data: RequestData | None = None,
     files: RequestFiles | None = None,
     json: typing.Any | None = None,
+    json_serialize: JSONEncoder | None = None,
+    json_deserialize: JSONDecoder | None = None,
     headers: HeaderTypes | None = None,
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
@@ -168,6 +176,8 @@ def stream(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_serialize=json_serialize,
+        json_deserialize=json_deserialize,
     ) as client:
         with client.stream(
             method=method,
@@ -198,6 +208,7 @@ def get(
     verify: VerifyTypes = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
+    json_deserialize: JSONDecoder | None = None,
 ) -> Response:
     """
     Sends a `GET` request.
@@ -221,6 +232,7 @@ def get(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_deserialize=json_deserialize,
     )
 
 
@@ -238,6 +250,7 @@ def options(
     verify: VerifyTypes = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
+    json_deserialize: JSONDecoder | None = None,
 ) -> Response:
     """
     Sends an `OPTIONS` request.
@@ -261,6 +274,7 @@ def options(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_deserialize=json_deserialize,
     )
 
 
@@ -278,6 +292,7 @@ def head(
     verify: VerifyTypes = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
+    json_deserialize: JSONDecoder | None = None,
 ) -> Response:
     """
     Sends a `HEAD` request.
@@ -301,6 +316,7 @@ def head(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_deserialize=json_deserialize,
     )
 
 
@@ -311,6 +327,8 @@ def post(
     data: RequestData | None = None,
     files: RequestFiles | None = None,
     json: typing.Any | None = None,
+    json_serialize: JSONEncoder | None = None,
+    json_deserialize: JSONDecoder | None = None,
     params: QueryParamTypes | None = None,
     headers: HeaderTypes | None = None,
     cookies: CookieTypes | None = None,
@@ -335,6 +353,8 @@ def post(
         data=data,
         files=files,
         json=json,
+        json_serialize=json_serialize,
+        json_deserialize=json_deserialize,
         params=params,
         headers=headers,
         cookies=cookies,
@@ -356,6 +376,8 @@ def put(
     data: RequestData | None = None,
     files: RequestFiles | None = None,
     json: typing.Any | None = None,
+    json_serialize: JSONEncoder | None = None,
+    json_deserialize: JSONDecoder | None = None,
     params: QueryParamTypes | None = None,
     headers: HeaderTypes | None = None,
     cookies: CookieTypes | None = None,
@@ -380,6 +402,8 @@ def put(
         data=data,
         files=files,
         json=json,
+        json_serialize=json_serialize,
+        json_deserialize=json_deserialize,
         params=params,
         headers=headers,
         cookies=cookies,
@@ -401,6 +425,8 @@ def patch(
     data: RequestData | None = None,
     files: RequestFiles | None = None,
     json: typing.Any | None = None,
+    json_serialize: JSONEncoder | None = None,
+    json_deserialize: JSONDecoder | None = None,
     params: QueryParamTypes | None = None,
     headers: HeaderTypes | None = None,
     cookies: CookieTypes | None = None,
@@ -425,6 +451,8 @@ def patch(
         data=data,
         files=files,
         json=json,
+        json_serialize=json_serialize,
+        json_deserialize=json_deserialize,
         params=params,
         headers=headers,
         cookies=cookies,
@@ -453,6 +481,7 @@ def delete(
     verify: VerifyTypes = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
+    json_deserialize: JSONDecoder | None = None,
 ) -> Response:
     """
     Sends a `DELETE` request.
@@ -476,4 +505,5 @@ def delete(
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
+        json_deserialize=json_deserialize,
     )
