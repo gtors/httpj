@@ -1,4 +1,4 @@
-site_name: HTTPX
+site_name: HTTPJ
 site_description: A next-generation HTTP client for Python.
 site_url: https://www.python-httpx.org/
 
@@ -17,8 +17,8 @@ theme:
           icon: 'material/lightbulb-outline'
           name: 'Switch to light mode'
 
-repo_name: encode/httpx
-repo_url: https://github.com/encode/httpx/
+repo_name: encode/httpj
+repo_url: https://github.com/encode/httpj/
 edit_uri: ""
 
 nav:

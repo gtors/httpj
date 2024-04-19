@@ -39,8 +39,8 @@ class BaseTransport:
 
         Example usage:
 
-            with httpx.HTTPTransport() as transport:
-                req = httpx.Request(
+            with httpj.HTTPTransport() as transport:
+                req = httpj.Request(
                     method=b"GET",
                     url=(b"https", b"www.example.com", 443, b"/"),
                     headers=[(b"Host", b"www.example.com")],

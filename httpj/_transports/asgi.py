@@ -53,7 +53,7 @@ class ASGITransport(AsyncBaseTransport):
     The simplest way to use this functionality is to use the `app` argument.
 
     ```
-    client = httpx.AsyncClient(app=app)
+    client = httpj.AsyncClient(app=app)
     ```
 
     Alternatively, you can setup the transport instance explicitly.
@@ -61,12 +61,12 @@ class ASGITransport(AsyncBaseTransport):
     to the ASGITransport class:
 
     ```
-    transport = httpx.ASGITransport(
+    transport = httpj.ASGITransport(
         app=app,
         root_path="/submount",
         client=("1.2.3.4", 123)
     )
-    client = httpx.AsyncClient(transport=transport)
+    client = httpj.AsyncClient(transport=transport)
     ```
 
     Arguments:

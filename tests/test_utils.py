@@ -6,8 +6,8 @@ import random
 import certifi
 import pytest
 
-import httpx
-from httpx._utils import (
+import httpj
+from httpj._utils import (
     URLPattern,
     get_ca_bundle_from_env,
     get_environment_proxies,
@@ -31,13 +31,13 @@ from .common import TESTS_DIR
 )
 def test_encoded(encoding):
     content = '{"abc": 123}'.encode(encoding)
-    response = httpx.Response(200, content=content)
+    response = httpj.Response(200, content=content)
     assert response.json() == {"abc": 123}
 
 
 def test_bad_utf_like_encoding():
     content = b"\x00\x00\x00\x00"
-    response = httpx.Response(200, content=content)
+    response = httpj.Response(200, content=content)
     with pytest.raises(json.decoder.JSONDecodeError):
         response.json()
 
@@ -53,7 +53,7 @@ def test_bad_utf_like_encoding():
 )
 def test_guess_by_bom(encoding, expected):
     content = '\ufeff{"abc": 123}'.encode(encoding)
-    response = httpx.Response(200, content=content)
+    response = httpj.Response(200, content=content)
     assert response.json() == {"abc": 123}
 
 
@@ -77,24 +77,24 @@ def test_guess_by_bom(encoding, expected):
     ),
 )
 def test_parse_header_links(value, expected):
-    all_links = httpx.Response(200, headers={"link": value}).links.values()
+    all_links = httpj.Response(200, headers={"link": value}).links.values()
     assert all(link in all_links for link in expected)
 
 
 def test_parse_header_links_no_link():
-    all_links = httpx.Response(200).links
+    all_links = httpj.Response(200).links
     assert all_links == {}
 
 
 def test_logging_request(server, caplog):
     caplog.set_level(logging.INFO)
-    with httpx.Client() as client:
+    with httpj.Client() as client:
         response = client.get(server.url)
         assert response.status_code == 200
 
     assert caplog.record_tuples == [
         (
-            "httpx",
+            "httpj",
             logging.INFO,
             'HTTP Request: GET http://127.0.0.1:8000/ "HTTP/1.1 200 OK"',
         )
@@ -103,19 +103,19 @@ def test_logging_request(server, caplog):
 
 def test_logging_redirect_chain(server, caplog):
     caplog.set_level(logging.INFO)
-    with httpx.Client(follow_redirects=True) as client:
+    with httpj.Client(follow_redirects=True) as client:
         response = client.get(server.url.copy_with(path="/redirect_301"))
         assert response.status_code == 200
 
     assert caplog.record_tuples == [
         (
-            "httpx",
+            "httpj",
             logging.INFO,
             "HTTP Request: GET http://127.0.0.1:8000/redirect_301"
             ' "HTTP/1.1 301 Moved Permanently"',
         ),
         (
-            "httpx",
+            "httpj",
             logging.INFO,
             'HTTP Request: GET http://127.0.0.1:8000/ "HTTP/1.1 200 OK"',
         ),
@@ -124,18 +124,18 @@ def test_logging_redirect_chain(server, caplog):
 
 def test_logging_ssl(caplog):
     caplog.set_level(logging.DEBUG)
-    with httpx.Client():
+    with httpj.Client():
         pass
 
     cafile = certifi.where()
     assert caplog.record_tuples == [
         (
-            "httpx",
+            "httpj",
             logging.DEBUG,
             "load_ssl_context verify=True cert=None trust_env=True http2=False",
         ),
         (
-            "httpx",
+            "httpj",
             logging.DEBUG,
             f"load_verify_locations cafile='{cafile}'",
         ),
@@ -218,61 +218,61 @@ def test_get_environment_proxies(environment, proxies):
 )
 def test_obfuscate_sensitive_headers(headers, output):
     as_dict = {k: v for k, v in output}
-    headers_class = httpx.Headers({k: v for k, v in headers})
+    headers_class = httpj.Headers({k: v for k, v in headers})
     assert repr(headers_class) == f"Headers({as_dict!r})"
 
 
 def test_same_origin():
-    origin = httpx.URL("https://example.com")
-    request = httpx.Request("GET", "HTTPS://EXAMPLE.COM:443")
+    origin = httpj.URL("https://example.com")
+    request = httpj.Request("GET", "HTTPS://EXAMPLE.COM:443")
 
-    client = httpx.Client()
+    client = httpj.Client()
     headers = client._redirect_headers(request, origin, "GET")
 
     assert headers["Host"] == request.url.netloc.decode("ascii")
 
 
 def test_not_same_origin():
-    origin = httpx.URL("https://example.com")
-    request = httpx.Request("GET", "HTTP://EXAMPLE.COM:80")
+    origin = httpj.URL("https://example.com")
+    request = httpj.Request("GET", "HTTP://EXAMPLE.COM:80")
 
-    client = httpx.Client()
+    client = httpj.Client()
     headers = client._redirect_headers(request, origin, "GET")
 
     assert headers["Host"] == origin.netloc.decode("ascii")
 
 
 def test_is_https_redirect():
-    url = httpx.URL("https://example.com")
-    request = httpx.Request(
+    url = httpj.URL("https://example.com")
+    request = httpj.Request(
         "GET", "http://example.com", headers={"Authorization": "empty"}
     )
 
-    client = httpx.Client()
+    client = httpj.Client()
     headers = client._redirect_headers(request, url, "GET")
 
     assert "Authorization" in headers
 
 
 def test_is_not_https_redirect():
-    url = httpx.URL("https://www.example.com")
-    request = httpx.Request(
+    url = httpj.URL("https://www.example.com")
+    request = httpj.Request(
         "GET", "http://example.com", headers={"Authorization": "empty"}
     )
 
-    client = httpx.Client()
+    client = httpj.Client()
     headers = client._redirect_headers(request, url, "GET")
 
     assert "Authorization" not in headers
 
 
 def test_is_not_https_redirect_if_not_default_ports():
-    url = httpx.URL("https://example.com:1337")
-    request = httpx.Request(
+    url = httpj.URL("https://example.com:1337")
+    request = httpj.Request(
         "GET", "http://example.com:9999", headers={"Authorization": "empty"}
     )
 
-    client = httpx.Client()
+    client = httpj.Client()
     headers = client._redirect_headers(request, url, "GET")
 
     assert "Authorization" not in headers
@@ -297,7 +297,7 @@ def test_is_not_https_redirect_if_not_default_ports():
 )
 def test_url_matches(pattern, url, expected):
     pattern = URLPattern(pattern)
-    assert pattern.matches(httpx.URL(url)) == expected
+    assert pattern.matches(httpj.URL(url)) == expected
 
 
 def test_pattern_priority():

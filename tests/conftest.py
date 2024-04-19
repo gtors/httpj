@@ -17,7 +17,7 @@ from cryptography.hazmat.primitives.serialization import (
 from uvicorn.config import Config
 from uvicorn.server import Server
 
-import httpx
+import httpj
 from tests.concurrency import sleep
 
 ENVIRONMENT_VARIABLES = {
@@ -229,9 +229,9 @@ def cert_encrypted_private_key_file(localhost_cert):
 
 class TestServer(Server):
     @property
-    def url(self) -> httpx.URL:
+    def url(self) -> httpj.URL:
         protocol = "https" if self.config.is_ssl else "http"
-        return httpx.URL(f"{protocol}://{self.config.host}:{self.config.port}/")
+        return httpj.URL(f"{protocol}://{self.config.host}:{self.config.port}/")
 
     def install_signal_handlers(self) -> None:
         # Disable the default installation of handlers for signals such as SIGTERM,

@@ -36,7 +36,7 @@ DEFAULT_CIPHERS = ":".join(
 )
 
 
-logger = logging.getLogger("httpx")
+logger = logging.getLogger("httpj")
 
 
 class UnsetType:
@@ -245,7 +245,7 @@ class Timeout:
         else:
             if isinstance(timeout, UnsetType):
                 raise ValueError(
-                    "httpx.Timeout must either include a default, or set all "
+                    "httpj.Timeout must either include a default, or set all "
                     "four parameters explicitly."
                 )
             self.connect = timeout if isinstance(connect, UnsetType) else connect

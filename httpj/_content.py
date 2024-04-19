@@ -93,7 +93,7 @@ class UnattachedStream(AsyncByteStream, SyncByteStream):
     """
     If a request or response is serialized using pickle, then it is no longer
     attached to a stream for I/O purposes. Any stream operations should result
-    in `httpx.StreamClosed`.
+    in `httpj.StreamClosed`.
     """
 
     def __iter__(self) -> Iterator[bytes]:

@@ -1,6 +1,6 @@
 # Third Party Packages
 
-As HTTPX usage grows, there is an expanding community of developers building tools and libraries that integrate with HTTPX, or depend on HTTPX. Here are some of them.
+As HTTPJ usage grows, there is an expanding community of developers building tools and libraries that integrate with HTTPJ, or depend on HTTPJ. Here are some of them.
 
 ## Plugins
 
@@ -10,43 +10,43 @@ As HTTPX usage grows, there is an expanding community of developers building too
 
 [GitHub](https://github.com/karpetrosyan/hishel) - [Documentation](https://hishel.com/)
 
-An elegant HTTP Cache implementation for HTTPX and HTTP Core.
+An elegant HTTP Cache implementation for HTTPJ and HTTP Core.
 
 ### Authlib
 
 [GitHub](https://github.com/lepture/authlib) - [Documentation](https://docs.authlib.org/en/latest/)
 
-The ultimate Python library in building OAuth and OpenID Connect clients and servers. Includes an [OAuth HTTPX client](https://docs.authlib.org/en/latest/client/httpx.html).
+The ultimate Python library in building OAuth and OpenID Connect clients and servers. Includes an [OAuth HTTPJ client](https://docs.authlib.org/en/latest/client/httpj.html).
 
 ### Gidgethub
 
 [GitHub](https://github.com/brettcannon/gidgethub) - [Documentation](https://gidgethub.readthedocs.io/en/latest/index.html)
 
-An asynchronous GitHub API library. Includes [HTTPX support](https://gidgethub.readthedocs.io/en/latest/httpx.html).
+An asynchronous GitHub API library. Includes [HTTPJ support](https://gidgethub.readthedocs.io/en/latest/httpj.html).
 
-### HTTPX-Auth
+### HTTPJ-Auth
 
-[GitHub](https://github.com/Colin-b/httpx_auth) - [Documentation](https://colin-b.github.io/httpx_auth/)
+[GitHub](https://github.com/Colin-b/httpj_auth) - [Documentation](https://colin-b.github.io/httpj_auth/)
 
-Provides authentication classes to be used with HTTPX [authentication parameter](advanced/authentication.md#customizing-authentication).
+Provides authentication classes to be used with HTTPJ [authentication parameter](advanced/authentication.md#customizing-authentication).
 
-### pytest-HTTPX
+### pytest-HTTPJ
 
-[GitHub](https://github.com/Colin-b/pytest_httpx) - [Documentation](https://colin-b.github.io/pytest_httpx/)
+[GitHub](https://github.com/Colin-b/pytest_httpj) - [Documentation](https://colin-b.github.io/pytest_httpj/)
 
-Provides `httpx_mock` [pytest](https://docs.pytest.org/en/latest/) fixture to mock HTTPX within test cases.
+Provides `httpj_mock` [pytest](https://docs.pytest.org/en/latest/) fixture to mock HTTPJ within test cases.
 
 ### RESPX
 
 [GitHub](https://github.com/lundberg/respx) - [Documentation](https://lundberg.github.io/respx/)
 
-A utility for mocking out the Python HTTPX library.
+A utility for mocking out the Python HTTPJ library.
 
 ### rpc.py
 
 [Github](https://github.com/abersheeran/rpc.py) - [Documentation](https://github.com/abersheeran/rpc.py#rpcpy)
 
-An fast and powerful RPC framework based on ASGI/WSGI. Use HTTPX as the client of the RPC service.
+An fast and powerful RPC framework based on ASGI/WSGI. Use HTTPJ as the client of the RPC service.
 
 ### VCR.py
 
@@ -54,23 +54,23 @@ An fast and powerful RPC framework based on ASGI/WSGI. Use HTTPX as the client o
 
 A utility for record and repeat an http request.
 
-### httpx-caching
+### httpj-caching
 
-[Github](https://github.com/johtso/httpx-caching)
+[Github](https://github.com/johtso/httpj-caching)
 
-This package adds caching functionality to HTTPX
+This package adds caching functionality to HTTPJ
 
-### httpx-sse
+### httpj-sse
 
-[GitHub](https://github.com/florimondmanca/httpx-sse)
+[GitHub](https://github.com/florimondmanca/httpj-sse)
 
-Allows consuming Server-Sent Events (SSE) with HTTPX.
+Allows consuming Server-Sent Events (SSE) with HTTPJ.
 
 ### robox
 
 [Github](https://github.com/danclaudiupop/robox)
 
-A library for scraping the web built on top of HTTPX.
+A library for scraping the web built on top of HTTPJ.
 
 ## Gists
 

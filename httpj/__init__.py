@@ -19,9 +19,9 @@ except ImportError:  # pragma: no cover
         import sys
 
         print(
-            "The httpx command line client could not run because the required "
+            "The httpj command line client could not run because the required "
             "dependencies were not installed.\nMake sure you've installed "
-            "everything with: pip install 'httpx[cli]'"
+            "everything with: pip install 'httpj[cli]'"
         )
         sys.exit(1)
 
@@ -102,4 +102,4 @@ __all__ = [
 __locals = locals()
 for __name in __all__:
     if not __name.startswith("__"):
-        setattr(__locals[__name], "__module__", "httpx")  # noqa
+        setattr(__locals[__name], "__module__", "httpj")  # noqa

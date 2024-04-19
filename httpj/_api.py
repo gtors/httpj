@@ -100,8 +100,8 @@ def request(
     Usage:
 
     ```
-    >>> import httpx
-    >>> response = httpx.request('GET', 'https://httpbin.org/get')
+    >>> import httpj
+    >>> response = httpj.request('GET', 'https://httpbin.org/get')
     >>> response
     <Response [200 OK]>
     ```
@@ -151,10 +151,10 @@ def stream(
     trust_env: bool = True,
 ) -> typing.Iterator[Response]:
     """
-    Alternative to `httpx.request()` that streams the response body
+    Alternative to `httpj.request()` that streams the response body
     instead of loading it into memory at once.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
 
     See also: [Streaming Responses][0]
 
@@ -202,7 +202,7 @@ def get(
     """
     Sends a `GET` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
 
     Note that the `data`, `files`, `json` and `content` parameters are not available
     on this function, as `GET` requests should not include a request body.
@@ -242,7 +242,7 @@ def options(
     """
     Sends an `OPTIONS` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
 
     Note that the `data`, `files`, `json` and `content` parameters are not available
     on this function, as `OPTIONS` requests should not include a request body.
@@ -282,7 +282,7 @@ def head(
     """
     Sends a `HEAD` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
 
     Note that the `data`, `files`, `json` and `content` parameters are not available
     on this function, as `HEAD` requests should not include a request body.
@@ -326,7 +326,7 @@ def post(
     """
     Sends a `POST` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
     """
     return request(
         "POST",
@@ -371,7 +371,7 @@ def put(
     """
     Sends a `PUT` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
     """
     return request(
         "PUT",
@@ -416,7 +416,7 @@ def patch(
     """
     Sends a `PATCH` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
     """
     return request(
         "PATCH",
@@ -457,7 +457,7 @@ def delete(
     """
     Sends a `DELETE` request.
 
-    **Parameters**: See `httpx.request`.
+    **Parameters**: See `httpj.request`.
 
     Note that the `data`, `files`, `json` and `content` parameters are not available
     on this function, as `DELETE` requests should not include a request body.

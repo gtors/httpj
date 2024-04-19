@@ -98,7 +98,7 @@ class FileField:
 
         # This large tuple based API largely mirror's requests' API
         # It would be good to think of better APIs for this that we could
-        # include in httpx 2.0 since variable length tuples(especially of 4 elements)
+        # include in httpj 2.0 since variable length tuples(especially of 4 elements)
         # are quite unwieldly
         if isinstance(value, tuple):
             if len(value) == 2:

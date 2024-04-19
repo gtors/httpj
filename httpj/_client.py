@@ -89,9 +89,9 @@ class UseClientDefault:
 USE_CLIENT_DEFAULT = UseClientDefault()
 
 
-logger = logging.getLogger("httpx")
+logger = logging.getLogger("httpj")
 
-USER_AGENT = f"python-httpx/{__version__}"
+USER_AGENT = f"python-httpj/{__version__}"
 ACCEPT_ENCODING = ", ".join(
     [key for key in SUPPORTED_DECODERS.keys() if key != "identity"]
 )
@@ -509,7 +509,7 @@ class BaseClient:
             ) from None
 
         # Handle malformed 'Location' headers that are "absolute" form, have no host.
-        # See: https://github.com/encode/httpx/issues/771
+        # See: https://github.com/encode/httpj/issues/771
         if url.scheme and not url.host:
             url = url.copy_with(host=request.url.host)
 
@@ -581,7 +581,7 @@ class Client(BaseClient):
     Usage:
 
     ```python
-    >>> client = httpx.Client()
+    >>> client = httpj.Client()
     >>> response = client.get('https://example.org')
     ```
 
@@ -671,7 +671,7 @@ class Client(BaseClient):
             except ImportError:  # pragma: no cover
                 raise ImportError(
                     "Using http2=True, but the 'h2' package is not installed. "
-                    "Make sure to install httpx using `pip install httpx[http2]`."
+                    "Make sure to install httpj using `pip install httpj[http2]`."
                 ) from None
 
         if proxies:
@@ -704,16 +704,18 @@ class Client(BaseClient):
             trust_env=trust_env,
         )
         self._mounts: dict[URLPattern, BaseTransport | None] = {
-            URLPattern(key): None
-            if proxy is None
-            else self._init_proxy_transport(
-                proxy,
-                verify=verify,
-                cert=cert,
-                http1=http1,
-                http2=http2,
-                limits=limits,
-                trust_env=trust_env,
+            URLPattern(key): (
+                None
+                if proxy is None
+                else self._init_proxy_transport(
+                    proxy,
+                    verify=verify,
+                    cert=cert,
+                    http1=http1,
+                    http2=http2,
+                    limits=limits,
+                    trust_env=trust_env,
+                )
             )
             for key, proxy in proxy_map.items()
         }
@@ -856,10 +858,10 @@ class Client(BaseClient):
         extensions: RequestExtensions | None = None,
     ) -> typing.Iterator[Response]:
         """
-        Alternative to `httpx.request()` that streams the response body
+        Alternative to `httpj.request()` that streams the response body
         instead of loading it into memory at once.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
 
         See also: [Streaming Responses][0]
 
@@ -904,7 +906,7 @@ class Client(BaseClient):
 
         Typically you'll want to build one with `Client.build_request()`
         so that any client-level configuration is merged into the request,
-        but passing an explicit `httpx.Request()` is supported as well.
+        but passing an explicit `httpj.Request()` is supported as well.
 
         See also: [Request instances][0]
 
@@ -1062,7 +1064,7 @@ class Client(BaseClient):
         """
         Send a `GET` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "GET",
@@ -1091,7 +1093,7 @@ class Client(BaseClient):
         """
         Send an `OPTIONS` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "OPTIONS",
@@ -1120,7 +1122,7 @@ class Client(BaseClient):
         """
         Send a `HEAD` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "HEAD",
@@ -1153,7 +1155,7 @@ class Client(BaseClient):
         """
         Send a `POST` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "POST",
@@ -1190,7 +1192,7 @@ class Client(BaseClient):
         """
         Send a `PUT` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "PUT",
@@ -1227,7 +1229,7 @@ class Client(BaseClient):
         """
         Send a `PATCH` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "PATCH",
@@ -1260,7 +1262,7 @@ class Client(BaseClient):
         """
         Send a `DELETE` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return self.request(
             "DELETE",
@@ -1328,7 +1330,7 @@ class AsyncClient(BaseClient):
     Usage:
 
     ```python
-    >>> async with httpx.AsyncClient() as client:
+    >>> async with httpj.AsyncClient() as client:
     >>>     response = await client.get('https://example.org')
     ```
 
@@ -1418,7 +1420,7 @@ class AsyncClient(BaseClient):
             except ImportError:  # pragma: no cover
                 raise ImportError(
                     "Using http2=True, but the 'h2' package is not installed. "
-                    "Make sure to install httpx using `pip install httpx[http2]`."
+                    "Make sure to install httpj using `pip install httpj[http2]`."
                 ) from None
 
         if proxies:
@@ -1452,16 +1454,18 @@ class AsyncClient(BaseClient):
         )
 
         self._mounts: dict[URLPattern, AsyncBaseTransport | None] = {
-            URLPattern(key): None
-            if proxy is None
-            else self._init_proxy_transport(
-                proxy,
-                verify=verify,
-                cert=cert,
-                http1=http1,
-                http2=http2,
-                limits=limits,
-                trust_env=trust_env,
+            URLPattern(key): (
+                None
+                if proxy is None
+                else self._init_proxy_transport(
+                    proxy,
+                    verify=verify,
+                    cert=cert,
+                    http1=http1,
+                    http2=http2,
+                    limits=limits,
+                    trust_env=trust_env,
+                )
             )
             for key, proxy in proxy_map.items()
         }
@@ -1604,10 +1608,10 @@ class AsyncClient(BaseClient):
         extensions: RequestExtensions | None = None,
     ) -> typing.AsyncIterator[Response]:
         """
-        Alternative to `httpx.request()` that streams the response body
+        Alternative to `httpj.request()` that streams the response body
         instead of loading it into memory at once.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
 
         See also: [Streaming Responses][0]
 
@@ -1652,7 +1656,7 @@ class AsyncClient(BaseClient):
 
         Typically you'll want to build one with `AsyncClient.build_request()`
         so that any client-level configuration is merged into the request,
-        but passing an explicit `httpx.Request()` is supported as well.
+        but passing an explicit `httpj.Request()` is supported as well.
 
         See also: [Request instances][0]
 
@@ -1810,7 +1814,7 @@ class AsyncClient(BaseClient):
         """
         Send a `GET` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "GET",
@@ -1839,7 +1843,7 @@ class AsyncClient(BaseClient):
         """
         Send an `OPTIONS` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "OPTIONS",
@@ -1868,7 +1872,7 @@ class AsyncClient(BaseClient):
         """
         Send a `HEAD` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "HEAD",
@@ -1901,7 +1905,7 @@ class AsyncClient(BaseClient):
         """
         Send a `POST` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "POST",
@@ -1938,7 +1942,7 @@ class AsyncClient(BaseClient):
         """
         Send a `PUT` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "PUT",
@@ -1975,7 +1979,7 @@ class AsyncClient(BaseClient):
         """
         Send a `PATCH` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "PATCH",
@@ -2008,7 +2012,7 @@ class AsyncClient(BaseClient):
         """
         Send a `DELETE` request.
 
-        **Parameters**: See `httpx.request`.
+        **Parameters**: See `httpj.request`.
         """
         return await self.request(
             "DELETE",

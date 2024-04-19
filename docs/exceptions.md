@@ -1,8 +1,8 @@
 # Exceptions
 
-This page lists exceptions that may be raised when using HTTPX.
+This page lists exceptions that may be raised when using HTTPJ.
 
-For an overview of how to work with HTTPX exceptions, see [Exceptions (Quickstart)](quickstart.md#exceptions).
+For an overview of how to work with HTTPJ exceptions, see [Exceptions (Quickstart)](quickstart.md#exceptions).
 
 ## The exception hierarchy
 
@@ -39,86 +39,86 @@ For an overview of how to work with HTTPX exceptions, see [Exceptions (Quickstar
 
 ## Exception classes
 
-::: httpx.HTTPError
+::: httpj.HTTPError
     :docstring:
 
-::: httpx.RequestError
+::: httpj.RequestError
     :docstring:
 
-::: httpx.TransportError
+::: httpj.TransportError
     :docstring:
 
-::: httpx.TimeoutException
+::: httpj.TimeoutException
     :docstring:
 
-::: httpx.ConnectTimeout
+::: httpj.ConnectTimeout
     :docstring:
 
-::: httpx.ReadTimeout
+::: httpj.ReadTimeout
     :docstring:
 
-::: httpx.WriteTimeout
+::: httpj.WriteTimeout
     :docstring:
 
-::: httpx.PoolTimeout
+::: httpj.PoolTimeout
     :docstring:
 
-::: httpx.NetworkError
+::: httpj.NetworkError
     :docstring:
 
-::: httpx.ConnectError
+::: httpj.ConnectError
     :docstring:
 
-::: httpx.ReadError
+::: httpj.ReadError
     :docstring:
 
-::: httpx.WriteError
+::: httpj.WriteError
     :docstring:
 
-::: httpx.CloseError
+::: httpj.CloseError
     :docstring:
 
-::: httpx.ProtocolError
+::: httpj.ProtocolError
     :docstring:
 
-::: httpx.LocalProtocolError
+::: httpj.LocalProtocolError
     :docstring:
 
-::: httpx.RemoteProtocolError
+::: httpj.RemoteProtocolError
     :docstring:
 
-::: httpx.ProxyError
+::: httpj.ProxyError
     :docstring:
 
-::: httpx.UnsupportedProtocol
+::: httpj.UnsupportedProtocol
     :docstring:
 
-::: httpx.DecodingError
+::: httpj.DecodingError
     :docstring:
 
-::: httpx.TooManyRedirects
+::: httpj.TooManyRedirects
     :docstring:
 
-::: httpx.HTTPStatusError
+::: httpj.HTTPStatusError
     :docstring:
 
-::: httpx.InvalidURL
+::: httpj.InvalidURL
     :docstring:
 
-::: httpx.CookieConflict
+::: httpj.CookieConflict
     :docstring:
 
-::: httpx.StreamError
+::: httpj.StreamError
     :docstring:
 
-::: httpx.StreamConsumed
+::: httpj.StreamConsumed
     :docstring:
 
-::: httpx.StreamClosed
+::: httpj.StreamClosed
     :docstring:
 
-::: httpx.ResponseNotRead
+::: httpj.ResponseNotRead
     :docstring:
 
-::: httpx.RequestNotRead
+::: httpj.RequestNotRead
     :docstring:

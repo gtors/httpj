@@ -11,17 +11,17 @@ Example usages...
 
 # Disable HTTP/2 on a single specific domain.
 mounts = {
-    "all://": httpx.HTTPTransport(http2=True),
-    "all://*example.org": httpx.HTTPTransport()
+    "all://": httpj.HTTPTransport(http2=True),
+    "all://*example.org": httpj.HTTPTransport()
 }
 
 # Using advanced httpcore configuration, with connection retries.
-transport = httpx.HTTPTransport(retries=1)
-client = httpx.Client(transport=transport)
+transport = httpj.HTTPTransport(retries=1)
+client = httpj.Client(transport=transport)
 
 # Using advanced httpcore configuration, with unix domain sockets.
-transport = httpx.HTTPTransport(uds="socket.uds")
-client = httpx.Client(transport=transport)
+transport = httpj.HTTPTransport(uds="socket.uds")
+client = httpj.Client(transport=transport)
 """
 
 from __future__ import annotations
@@ -78,7 +78,7 @@ def map_httpcore_exceptions() -> typing.Iterator[None]:
                 continue
             # We want to map to the most specific exception we can find.
             # Eg if `exc` is an `httpcore.ReadTimeout`, we want to map to
-            # `httpx.ReadTimeout`, not just `httpx.TimeoutException`.
+            # `httpj.ReadTimeout`, not just `httpj.TimeoutException`.
             if mapped_exc is None or issubclass(to_exc, mapped_exc):
                 mapped_exc = to_exc
 
@@ -177,7 +177,7 @@ class HTTPTransport(BaseTransport):
             except ImportError:  # pragma: no cover
                 raise ImportError(
                     "Using SOCKS proxy, but the 'socksio' package is not installed. "
-                    "Make sure to install httpx using `pip install httpx[socks]`."
+                    "Make sure to install httpj using `pip install httpj[socks]`."
                 ) from None
 
             self._pool = httpcore.SOCKSProxy(
@@ -317,7 +317,7 @@ class AsyncHTTPTransport(AsyncBaseTransport):
             except ImportError:  # pragma: no cover
                 raise ImportError(
                     "Using SOCKS proxy, but the 'socksio' package is not installed. "
-                    "Make sure to install httpx using `pip install httpx[socks]`."
+                    "Make sure to install httpj using `pip install httpj[socks]`."
                 ) from None
 
             self._pool = httpcore.AsyncSOCKSProxy(

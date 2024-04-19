@@ -491,8 +491,8 @@ def urlencode(items: list[tuple[str, str]]) -> str:
     This is slightly different than `requests`, but is the behaviour that browsers use.
 
     See
-    - https://github.com/encode/httpx/issues/2536
-    - https://github.com/encode/httpx/issues/2721
+    - https://github.com/encode/httpj/issues/2536
+    - https://github.com/encode/httpj/issues/2721
     - https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlencode
     """
     return "&".join(

@@ -9,6 +9,6 @@ fi
 if [ -d 'htmlcov' ] ; then
     rm -r htmlcov
 fi
-if [ -d 'httpx.egg-info' ] ; then
-    rm -r httpx.egg-info
+if [ -d 'httpj.egg-info' ] ; then
+    rm -r httpj.egg-info
 fi

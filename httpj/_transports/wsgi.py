@@ -47,7 +47,7 @@ class WSGITransport(BaseTransport):
     The simplest way to use this functionality is to use the `app` argument.
 
     ```
-    client = httpx.Client(app=app)
+    client = httpj.Client(app=app)
     ```
 
     Alternatively, you can setup the transport instance explicitly.
@@ -55,12 +55,12 @@ class WSGITransport(BaseTransport):
     to the WSGITransport class:
 
     ```
-    transport = httpx.WSGITransport(
+    transport = httpj.WSGITransport(
         app=app,
         script_name="/submount",
         remote_addr="1.2.3.4"
     )
-    client = httpx.Client(transport=transport)
+    client = httpj.Client(transport=transport)
     ```
 
     Arguments:

@@ -102,7 +102,7 @@ class BrotliDecoder(ContentDecoder):
             raise ImportError(
                 "Using 'BrotliDecoder', but neither of the 'brotlicffi' or 'brotli' "
                 "packages have been installed. "
-                "Make sure to install httpx using `pip install httpx[brotli]`."
+                "Make sure to install httpj using `pip install httpj[brotli]`."
             ) from None
 
         self.decompressor = brotli.Decompressor()
@@ -145,7 +145,7 @@ class ZStandardDecoder(ContentDecoder):
     Handle 'zstd' RFC 8878 decoding.
 
     Requires `pip install zstandard`.
-    Can be installed as a dependency of httpx using `pip install httpx[zstd]`.
+    Can be installed as a dependency of httpj using `pip install httpj[zstd]`.
     """
 
     # inspired by the ZstdDecoder implementation in urllib3
@@ -153,7 +153,7 @@ class ZStandardDecoder(ContentDecoder):
         if zstd is None:  # pragma: no cover
             raise ImportError(
                 "Using 'ZStandardDecoder', ..."
-                "Make sure to install httpx using `pip install httpx[zstd]`."
+                "Make sure to install httpj using `pip install httpj[zstd]`."
             ) from None
 
         self.decompressor = zstd.ZstdDecompressor().decompressobj()
@@ -322,7 +322,7 @@ class LineDecoder:
 
         if not text:
             # NOTE: the edge case input of empty text doesn't occur in practice,
-            # because other httpx internals filter out this value
+            # because other httpj internals filter out this value
             return []  # pragma: no cover
 
         trailing_newline = text[-1] in NEWLINE_CHARS

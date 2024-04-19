@@ -82,9 +82,9 @@ class HTTPError(Exception):
 
     ```
     try:
-        response = httpx.get("https://www.example.com")
+        response = httpj.get("https://www.example.com")
         response.raise_for_status()
-    except httpx.HTTPError as exc:
+    except httpj.HTTPError as exc:
         print(f"HTTP Exception for {exc.request.url} - {exc}")
     ```
     """

@@ -1,35 +1,35 @@
 <p align="center">
-  <a href="https://www.python-httpx.org/"><img width="350" height="208" src="https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png" alt='HTTPX'></a>
+  <a href="https://www.python-httpx.org/"><img width="350" height="208" src="https://raw.githubusercontent.com/encode/httpj/master/docs/img/butterfly.png" alt='HTTPJ'></a>
 </p>
 
-<p align="center"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>
+<p align="center"><strong>HTTPJ</strong> <em>- A next-generation HTTP client for Python.</em></p>
 
 <p align="center">
-<a href="https://github.com/encode/httpx/actions">
-    <img src="https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg" alt="Test Suite">
+<a href="https://github.com/encode/httpj/actions">
+    <img src="https://github.com/encode/httpj/workflows/Test%20Suite/badge.svg" alt="Test Suite">
 </a>
-<a href="https://pypi.org/project/httpx/">
-    <img src="https://badge.fury.io/py/httpx.svg" alt="Package version">
+<a href="https://pypi.org/project/httpj/">
+    <img src="https://badge.fury.io/py/httpj.svg" alt="Package version">
 </a>
 </p>
 
-HTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated
+HTTPJ is a fully featured HTTP client library for Python 3. It includes **an integrated
 command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync
 and async APIs**.
 
 ---
 
-Install HTTPX using pip:
+Install HTTPJ using pip:
 
 ```shell
-$ pip install httpx
+$ pip install httpj
 ```
 
 Now, let's get started:
 
 ```pycon
->>> import httpx
->>> r = httpx.get('https://www.example.org/')
+>>> import httpj
+>>> r = httpj.get('https://www.example.org/')
 >>> r
 <Response [200 OK]>
 >>> r.status_code
@@ -43,24 +43,24 @@ Now, let's get started:
 Or, using the command-line client.
 
 ```shell
-$ pip install 'httpx[cli]'  # The command line client is an optional dependency.
+$ pip install 'httpj[cli]'  # The command line client is an optional dependency.
 ```
 
-Which now allows us to use HTTPX directly from the command-line...
+Which now allows us to use HTTPJ directly from the command-line...
 
 <p align="center">
-  <img width="700" src="docs/img/httpx-help.png" alt='httpx --help'>
+  <img width="700" src="docs/img/httpj-help.png" alt='httpj --help'>
 </p>
 
 Sending a request...
 
 <p align="center">
-  <img width="700" src="docs/img/httpx-request.png" alt='httpx http://httpbin.org/json'>
+  <img width="700" src="docs/img/httpj-request.png" alt='httpj http://httpbin.org/json'>
 </p>
 
 ## Features
 
-HTTPX builds on the well-established usability of `requests`, and gives you:
+HTTPJ builds on the well-established usability of `requests`, and gives you:
 
 * A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).
 * An integrated command-line client.
@@ -94,16 +94,16 @@ Plus all the standard features of `requests`...
 Install with pip:
 
 ```shell
-$ pip install httpx
+$ pip install httpj
 ```
 
 Or, to include the optional HTTP/2 support, use:
 
 ```shell
-$ pip install httpx[http2]
+$ pip install httpj[http2]
 ```
 
-HTTPX requires Python 3.8+.
+HTTPJ requires Python 3.8+.
 
 ## Documentation
 
@@ -115,17 +115,17 @@ For more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/
 
 The [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.
 
-To find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).
+To find out about tools that integrate with HTTPJ, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).
 
 ## Contribute
 
-If you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.
+If you want to contribute with HTTPJ check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.
 
 ## Dependencies
 
-The HTTPX project relies on these excellent libraries:
+The HTTPJ project relies on these excellent libraries:
 
-* `httpcore` - The underlying transport implementation for `httpx`.
+* `httpcore` - The underlying transport implementation for `httpj`.
   * `h11` - HTTP/1.1 support.
 * `certifi` - SSL certificates.
 * `idna` - Internationalized domain name support.
@@ -133,12 +133,12 @@ The HTTPX project relies on these excellent libraries:
 
 As well as these optional installs:
 
-* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*
-* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*
-* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*
-* `click` - Command line client support. *(Optional, with `httpx[cli]`)*
-* `brotli` or `brotlicffi` - Decoding for "brotli" compressed responses. *(Optional, with `httpx[brotli]`)*
-* `zstandard` - Decoding for "zstd" compressed responses. *(Optional, with `httpx[zstd]`)*
+* `h2` - HTTP/2 support. *(Optional, with `httpj[http2]`)*
+* `socksio` - SOCKS proxy support. *(Optional, with `httpj[socks]`)*
+* `rich` - Rich terminal support. *(Optional, with `httpj[cli]`)*
+* `click` - Command line client support. *(Optional, with `httpj[cli]`)*
+* `brotli` or `brotlicffi` - Decoding for "brotli" compressed responses. *(Optional, with `httpj[brotli]`)*
+* `zstandard` - Decoding for "zstd" compressed responses. *(Optional, with `httpj[zstd]`)*
 
 A huge amount of credit is due to `requests` for the API layout that
 much of this work follows, as well as to `urllib3` for plenty of design
@@ -146,4 +146,4 @@ inspiration around the lower-level networking details.
 
 ---
 
-<p align="center"><i>HTTPX is <a href="https://github.com/encode/httpx/blob/master/LICENSE.md">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>
+<p align="center"><i>HTTPJ is <a href="https://github.com/encode/httpj/blob/master/LICENSE.md">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>

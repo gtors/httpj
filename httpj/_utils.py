@@ -321,39 +321,39 @@ class URLPattern:
 
     # Wildcard matching...
     >>> pattern = URLPattern("all://")
-    >>> pattern.matches(httpx.URL("http://example.com"))
+    >>> pattern.matches(httpj.URL("http://example.com"))
     True
 
     # Witch scheme matching...
     >>> pattern = URLPattern("https://")
-    >>> pattern.matches(httpx.URL("https://example.com"))
+    >>> pattern.matches(httpj.URL("https://example.com"))
     True
-    >>> pattern.matches(httpx.URL("http://example.com"))
+    >>> pattern.matches(httpj.URL("http://example.com"))
     False
 
     # With domain matching...
     >>> pattern = URLPattern("https://example.com")
-    >>> pattern.matches(httpx.URL("https://example.com"))
+    >>> pattern.matches(httpj.URL("https://example.com"))
     True
-    >>> pattern.matches(httpx.URL("http://example.com"))
+    >>> pattern.matches(httpj.URL("http://example.com"))
     False
-    >>> pattern.matches(httpx.URL("https://other.com"))
+    >>> pattern.matches(httpj.URL("https://other.com"))
     False
 
     # Wildcard scheme, with domain matching...
     >>> pattern = URLPattern("all://example.com")
-    >>> pattern.matches(httpx.URL("https://example.com"))
+    >>> pattern.matches(httpj.URL("https://example.com"))
     True
-    >>> pattern.matches(httpx.URL("http://example.com"))
+    >>> pattern.matches(httpj.URL("http://example.com"))
     True
-    >>> pattern.matches(httpx.URL("https://other.com"))
+    >>> pattern.matches(httpj.URL("https://other.com"))
     False
 
     # With port matching...
     >>> pattern = URLPattern("https://example.com:1234")
-    >>> pattern.matches(httpx.URL("https://example.com:1234"))
+    >>> pattern.matches(httpj.URL("https://example.com:1234"))
     True
-    >>> pattern.matches(httpx.URL("https://example.com"))
+    >>> pattern.matches(httpj.URL("https://example.com"))
     False
     """
 

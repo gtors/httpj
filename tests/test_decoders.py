@@ -8,7 +8,7 @@ import chardet
 import pytest
 import zstandard as zstd
 
-import httpx
+import httpj
 
 
 def test_deflate():
@@ -22,7 +22,7 @@ def test_deflate():
     compressed_body = compressor.compress(body) + compressor.flush()
 
     headers = [(b"Content-Encoding", b"deflate")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -40,7 +40,7 @@ def test_zlib():
     compressed_body = zlib.compress(body)
 
     headers = [(b"Content-Encoding", b"deflate")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -54,7 +54,7 @@ def test_gzip():
     compressed_body = compressor.compress(body) + compressor.flush()
 
     headers = [(b"Content-Encoding", b"gzip")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -67,7 +67,7 @@ def test_brotli():
     compressed_body = b"\x8b\x03\x80test 123\x03"
 
     headers = [(b"Content-Encoding", b"br")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -80,7 +80,7 @@ def test_zstd():
     compressed_body = zstd.compress(body)
 
     headers = [(b"Content-Encoding", b"zstd")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -92,8 +92,8 @@ def test_zstd_decoding_error():
     compressed_body = "this_is_not_zstd_compressed_data"
 
     headers = [(b"Content-Encoding", b"zstd")]
-    with pytest.raises(httpx.DecodingError):
-        httpx.Response(
+    with pytest.raises(httpj.DecodingError):
+        httpj.Response(
             200,
             headers=headers,
             content=compressed_body,
@@ -117,7 +117,7 @@ def test_zstd_multiframe():
     compressed_body = io.BytesIO(data)
 
     headers = [(b"Content-Encoding", b"zstd")]
-    response = httpx.Response(200, headers=headers, content=compressed_body)
+    response = httpj.Response(200, headers=headers, content=compressed_body)
     response.read()
     assert response.content == b"foobar"
 
@@ -134,7 +134,7 @@ def test_multi():
     )
 
     headers = [(b"Content-Encoding", b"deflate, gzip")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -147,7 +147,7 @@ def test_multi_with_identity():
     compressed_body = b"\x8b\x03\x80test 123\x03"
 
     headers = [(b"Content-Encoding", b"br, identity")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -155,7 +155,7 @@ def test_multi_with_identity():
     assert response.content == body
 
     headers = [(b"Content-Encoding", b"identity, br")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compressed_body,
@@ -173,7 +173,7 @@ async def test_streaming():
         yield compressor.flush()
 
     headers = [(b"Content-Encoding", b"gzip")]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=compress(body),
@@ -185,7 +185,7 @@ async def test_streaming():
 @pytest.mark.parametrize("header_value", (b"deflate", b"gzip", b"br", b"identity"))
 def test_empty_content(header_value):
     headers = [(b"Content-Encoding", header_value)]
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=b"",
@@ -196,7 +196,7 @@ def test_empty_content(header_value):
 @pytest.mark.parametrize("header_value", (b"deflate", b"gzip", b"br", b"identity"))
 def test_decoders_empty_cases(header_value):
     headers = [(b"Content-Encoding", header_value)]
-    response = httpx.Response(content=b"", status_code=200, headers=headers)
+    response = httpj.Response(content=b"", status_code=200, headers=headers)
     assert response.read() == b""
 
 
@@ -204,12 +204,12 @@ def test_decoders_empty_cases(header_value):
 def test_decoding_errors(header_value):
     headers = [(b"Content-Encoding", header_value)]
     compressed_body = b"invalid"
-    with pytest.raises(httpx.DecodingError):
-        request = httpx.Request("GET", "https://example.org")
-        httpx.Response(200, headers=headers, content=compressed_body, request=request)
+    with pytest.raises(httpj.DecodingError):
+        request = httpj.Request("GET", "https://example.org")
+        httpj.Response(200, headers=headers, content=compressed_body, request=request)
 
-    with pytest.raises(httpx.DecodingError):
-        httpx.Response(200, headers=headers, content=compressed_body)
+    with pytest.raises(httpj.DecodingError):
+        httpj.Response(200, headers=headers, content=compressed_body)
 
 
 @pytest.mark.parametrize(
@@ -232,7 +232,7 @@ async def test_text_decoder_with_autodetect(data, encoding):
         return chardet.detect(content).get("encoding")
 
     # Accessing `.text` on a read response.
-    response = httpx.Response(200, content=iterator(), default_encoding=autodetect)
+    response = httpj.Response(200, content=iterator(), default_encoding=autodetect)
     await response.aread()
     assert response.text == (b"".join(data)).decode(encoding)
 
@@ -251,7 +251,7 @@ async def test_text_decoder_known_encoding():
         yield b"\x83"
         yield b"\x89\x83x\x83\x8b"
 
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=[(b"Content-Type", b"text/html; charset=shift-jis")],
         content=iterator(),
@@ -262,10 +262,10 @@ async def test_text_decoder_known_encoding():
 
 
 def test_text_decoder_empty_cases():
-    response = httpx.Response(200, content=b"")
+    response = httpj.Response(200, content=b"")
     assert response.text == ""
 
-    response = httpx.Response(200, content=[b""])
+    response = httpj.Response(200, content=[b""])
     response.read()
     assert response.text == ""
 
@@ -277,50 +277,50 @@ def test_text_decoder_empty_cases():
 def test_streaming_text_decoder(
     data: typing.Iterable[bytes], expected: list[str]
 ) -> None:
-    response = httpx.Response(200, content=iter(data))
+    response = httpj.Response(200, content=iter(data))
     assert list(response.iter_text()) == expected
 
 
 def test_line_decoder_nl():
-    response = httpx.Response(200, content=[b""])
+    response = httpj.Response(200, content=[b""])
     assert list(response.iter_lines()) == []
 
-    response = httpx.Response(200, content=[b"", b"a\n\nb\nc"])
+    response = httpj.Response(200, content=[b"", b"a\n\nb\nc"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
     # Issue #1033
-    response = httpx.Response(
+    response = httpj.Response(
         200, content=[b"", b"12345\n", b"foo ", b"bar ", b"baz\n"]
     )
     assert list(response.iter_lines()) == ["12345", "foo bar baz"]
 
 
 def test_line_decoder_cr():
-    response = httpx.Response(200, content=[b"", b"a\r\rb\rc"])
+    response = httpj.Response(200, content=[b"", b"a\r\rb\rc"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
-    response = httpx.Response(200, content=[b"", b"a\r\rb\rc\r"])
+    response = httpj.Response(200, content=[b"", b"a\r\rb\rc\r"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
     # Issue #1033
-    response = httpx.Response(
+    response = httpj.Response(
         200, content=[b"", b"12345\r", b"foo ", b"bar ", b"baz\r"]
     )
     assert list(response.iter_lines()) == ["12345", "foo bar baz"]
 
 
 def test_line_decoder_crnl():
-    response = httpx.Response(200, content=[b"", b"a\r\n\r\nb\r\nc"])
+    response = httpj.Response(200, content=[b"", b"a\r\n\r\nb\r\nc"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
-    response = httpx.Response(200, content=[b"", b"a\r\n\r\nb\r\nc\r\n"])
+    response = httpj.Response(200, content=[b"", b"a\r\n\r\nb\r\nc\r\n"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
-    response = httpx.Response(200, content=[b"", b"a\r", b"\n\r\nb\r\nc"])
+    response = httpj.Response(200, content=[b"", b"a\r", b"\n\r\nb\r\nc"])
     assert list(response.iter_lines()) == ["a", "", "b", "c"]
 
     # Issue #1033
-    response = httpx.Response(200, content=[b"", b"12345\r\n", b"foo bar baz\r\n"])
+    response = httpj.Response(200, content=[b"", b"12345\r\n", b"foo bar baz\r\n"])
     assert list(response.iter_lines()) == ["12345", "foo bar baz"]
 
 
@@ -328,7 +328,7 @@ def test_invalid_content_encoding_header():
     headers = [(b"Content-Encoding", b"invalid-header")]
     body = b"test 123"
 
-    response = httpx.Response(
+    response = httpj.Response(
         200,
         headers=headers,
         content=body,

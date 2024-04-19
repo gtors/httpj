@@ -3,47 +3,47 @@
 ## Helper Functions
 
 !!! note
-    Only use these functions if you're testing HTTPX in a console
+    Only use these functions if you're testing HTTPJ in a console
     or making a small number of requests. Using a `Client` will
     enable HTTP/2 and connection pooling for more efficient and
     long-lived connections.
 
-::: httpx.request
+::: httpj.request
     :docstring:
 
-::: httpx.get
+::: httpj.get
     :docstring:
 
-::: httpx.options
+::: httpj.options
     :docstring:
 
-::: httpx.head
+::: httpj.head
     :docstring:
 
-::: httpx.post
+::: httpj.post
     :docstring:
 
-::: httpx.put
+::: httpj.put
     :docstring:
 
-::: httpx.patch
+::: httpj.patch
     :docstring:
 
-::: httpx.delete
+::: httpj.delete
     :docstring:
 
-::: httpx.stream
+::: httpj.stream
     :docstring:
 
 ## `Client`
 
-::: httpx.Client
+::: httpj.Client
     :docstring:
     :members: headers cookies params auth request get head options post put patch delete stream build_request send close
 
 ## `AsyncClient`
 
-::: httpx.AsyncClient
+::: httpj.AsyncClient
     :docstring:
     :members: headers cookies params auth request get head options post put patch delete stream build_request send aclose
 
@@ -93,7 +93,7 @@
 what gets sent over the wire.*
 
 ```pycon
->>> request = httpx.Request("GET", "https://example.org", headers={'host': 'example.org'})
+>>> request = httpj.Request("GET", "https://example.org", headers={'host': 'example.org'})
 >>> response = client.send(request)
 ```
 

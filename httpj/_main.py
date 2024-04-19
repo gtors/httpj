@@ -24,12 +24,12 @@ from ._status_codes import codes
 def print_help() -> None:
     console = rich.console.Console()
 
-    console.print("[bold]HTTPX :butterfly:", justify="center")
+    console.print("[bold]HTTPJ :butterfly:", justify="center")
     console.print()
     console.print("A next generation HTTP client.", justify="center")
     console.print()
     console.print(
-        "Usage: [bold]httpx[/bold] [cyan]<URL> [OPTIONS][/cyan] ", justify="left"
+        "Usage: [bold]httpj[/bold] [cyan]<URL> [OPTIONS][/cyan] ", justify="left"
     )
     console.print()
 

@@ -1,10 +1,10 @@
 import pytest
 
-import httpx
+import httpj
 
 
 def test_headers():
-    h = httpx.Headers([("a", "123"), ("a", "456"), ("b", "789")])
+    h = httpj.Headers([("a", "123"), ("a", "456"), ("b", "789")])
     assert "a" in h
     assert "A" in h
     assert "b" in h
@@ -27,7 +27,7 @@ def test_headers():
     assert h == {"a": "123", "A": "456", "b": "789"}
     assert h != "a: 123\nA: 456\nb: 789"
 
-    h = httpx.Headers({"a": "123", "b": "789"})
+    h = httpj.Headers({"a": "123", "b": "789"})
     assert h["A"] == "123"
     assert h["B"] == "789"
     assert h.raw == [(b"a", b"123"), (b"b", b"789")]
@@ -35,7 +35,7 @@ def test_headers():
 
 
 def test_header_mutations():
-    h = httpx.Headers()
+    h = httpj.Headers()
     assert dict(h) == {}
     h["a"] = "1"
     assert dict(h) == {"a": "1"}
@@ -51,38 +51,38 @@ def test_header_mutations():
 
 
 def test_copy_headers_method():
-    headers = httpx.Headers({"custom": "example"})
+    headers = httpj.Headers({"custom": "example"})
     headers_copy = headers.copy()
     assert headers == headers_copy
     assert headers is not headers_copy
 
 
 def test_copy_headers_init():
-    headers = httpx.Headers({"custom": "example"})
-    headers_copy = httpx.Headers(headers)
+    headers = httpj.Headers({"custom": "example"})
+    headers_copy = httpj.Headers(headers)
     assert headers == headers_copy
 
 
 def test_headers_insert_retains_ordering():
-    headers = httpx.Headers({"a": "a", "b": "b", "c": "c"})
+    headers = httpj.Headers({"a": "a", "b": "b", "c": "c"})
     headers["b"] = "123"
     assert list(headers.values()) == ["a", "123", "c"]
 
 
 def test_headers_insert_appends_if_new():
-    headers = httpx.Headers({"a": "a", "b": "b", "c": "c"})
+    headers = httpj.Headers({"a": "a", "b": "b", "c": "c"})
     headers["d"] = "123"
     assert list(headers.values()) == ["a", "b", "c", "123"]
 
 
 def test_headers_insert_removes_all_existing():
-    headers = httpx.Headers([("a", "123"), ("a", "456")])
+    headers = httpj.Headers([("a", "123"), ("a", "456")])
     headers["a"] = "789"
     assert dict(headers) == {"a": "789"}
 
 
 def test_headers_delete_removes_all_existing():
-    headers = httpx.Headers([("a", "123"), ("a", "456")])
+    headers = httpj.Headers([("a", "123"), ("a", "456")])
     del headers["a"]
     assert dict(headers) == {}
 
@@ -91,7 +91,7 @@ def test_headers_dict_repr():
     """
     Headers should display with a dict repr by default.
     """
-    headers = httpx.Headers({"custom": "example"})
+    headers = httpj.Headers({"custom": "example"})
     assert repr(headers) == "Headers({'custom': 'example'})"
 
 
@@ -99,7 +99,7 @@ def test_headers_encoding_in_repr():
     """
     Headers should display an encoding in the repr if required.
     """
-    headers = httpx.Headers({b"custom": "example ☃".encode("utf-8")})
+    headers = httpj.Headers({b"custom": "example ☃".encode("utf-8")})
     assert repr(headers) == "Headers({'custom': 'example ☃'}, encoding='utf-8')"
 
 
@@ -107,7 +107,7 @@ def test_headers_list_repr():
     """
     Headers should display with a list repr if they include multiple identical keys.
     """
-    headers = httpx.Headers([("custom", "example 1"), ("custom", "example 2")])
+    headers = httpj.Headers([("custom", "example 1"), ("custom", "example 2")])
     assert (
         repr(headers) == "Headers([('custom', 'example 1'), ('custom', 'example 2')])"
     )
@@ -118,7 +118,7 @@ def test_headers_decode_ascii():
     Headers should decode as ascii by default.
     """
     raw_headers = [(b"Custom", b"Example")]
-    headers = httpx.Headers(raw_headers)
+    headers = httpj.Headers(raw_headers)
     assert dict(headers) == {"custom": "Example"}
     assert headers.encoding == "ascii"
 
@@ -128,7 +128,7 @@ def test_headers_decode_utf_8():
     Headers containing non-ascii codepoints should default to decoding as utf-8.
     """
     raw_headers = [(b"Custom", "Code point: ☃".encode("utf-8"))]
-    headers = httpx.Headers(raw_headers)
+    headers = httpj.Headers(raw_headers)
     assert dict(headers) == {"custom": "Code point: ☃"}
     assert headers.encoding == "utf-8"
 
@@ -138,7 +138,7 @@ def test_headers_decode_iso_8859_1():
     Headers containing non-UTF-8 codepoints should default to decoding as iso-8859-1.
     """
     raw_headers = [(b"Custom", "Code point: ÿ".encode("iso-8859-1"))]
-    headers = httpx.Headers(raw_headers)
+    headers = httpj.Headers(raw_headers)
     assert dict(headers) == {"custom": "Code point: ÿ"}
     assert headers.encoding == "iso-8859-1"
 
@@ -149,7 +149,7 @@ def test_headers_decode_explicit_encoding():
     particular decoding.
     """
     raw_headers = [(b"Custom", "Code point: ☃".encode("utf-8"))]
-    headers = httpx.Headers(raw_headers)
+    headers = httpj.Headers(raw_headers)
     headers.encoding = "iso-8859-1"
     assert dict(headers) == {"custom": "Code point: â\x98\x83"}
     assert headers.encoding == "iso-8859-1"
@@ -159,10 +159,10 @@ def test_multiple_headers():
     """
     `Headers.get_list` should support both split_commas=False and split_commas=True.
     """
-    h = httpx.Headers([("set-cookie", "a, b"), ("set-cookie", "c")])
+    h = httpj.Headers([("set-cookie", "a, b"), ("set-cookie", "c")])
     assert h.get_list("Set-Cookie") == ["a, b", "c"]
 
-    h = httpx.Headers([("vary", "a, b"), ("vary", "c")])
+    h = httpj.Headers([("vary", "a, b"), ("vary", "c")])
     assert h.get_list("Vary", split_commas=True) == ["a", "b", "c"]
 
 
@@ -172,5 +172,5 @@ def test_sensitive_headers(header):
     Some headers should be obfuscated because they contain sensitive data.
     """
     value = "s3kr3t"
-    h = httpx.Headers({header: value})
+    h = httpj.Headers({header: value})
     assert repr(h) == "Headers({'%s': '[secure]'})" % header
