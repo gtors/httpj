@@ -6,7 +6,7 @@
 
 <p align="center">
 <a href="https://github.com/gtors/httpj/actions">
-    <img src="https://github.com/encode/httpj/workflows/Test%20Suite/badge.svg" alt="Test Suite">
+    <img src="https://github.com/gtors/httpj/workflows/Test%20Suite/badge.svg" alt="Test Suite">
 </a>
 <a href="https://pypi.org/project/httpj/">
     <img src="https://badge.fury.io/py/httpj.svg" alt="Package version">
