@@ -41,7 +41,7 @@ def test_json_serializer(server, method, json_serializer):
         http_method = getattr(client, method)
         response = http_method(
             server.url,
-            json={"dt": datetime.datetime.utcnow()},
+            json={"dt": datetime.datetime.now()},
             json_serialize=json_serializer,
         )
         assert response.status_code == 200
@@ -52,7 +52,7 @@ def test_json_serializer(server, method, json_serializer):
     http_method = getattr(httpj, method)
     response = http_method(
         server.url,
-        json={"dt": datetime.datetime.utcnow()},
+        json={"dt": datetime.datetime.now()},
         json_serialize=json_serializer,
     )
     assert response.status_code == 200
