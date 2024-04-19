@@ -62,8 +62,7 @@ HeaderTypes = Union[
     Sequence[Tuple[bytes, bytes]],
 ]
 
-CookieTypes = Union["Cookies", CookieJar,
-                    Dict[str, str], List[Tuple[str, str]]]
+CookieTypes = Union["Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]]
 
 CertTypes = Union[
     # certfile
