@@ -4,10 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "httpj"
-description = "The next generation HTTP client."
+description = "A fork of httpx with support for a custom JSON serializer"
 license = "BSD-3-Clause"
 requires-python = ">=3.8"
 authors = [
+    { name = "Andrey Torsunov", email = "andrey.torsunov@gmail.com"},
     { name = "Tom Christie", email = "tom@tomchristie.com" },
 ]
 classifiers = [
@@ -60,10 +61,10 @@ zstd = [
 httpj = "httpj:main"
 
 [project.urls]
-Changelog = "https://github.com/encode/httpj/blob/master/CHANGELOG.md"
+Changelog = "https://github.com/gtors/httpj/blob/master/CHANGELOG.md"
 Documentation = "https://www.python-httpx.org"
-Homepage = "https://github.com/encode/httpj"
-Source = "https://github.com/encode/httpj"
+Homepage = "https://github.com/gtors/httpj"
+Source = "https://github.com/gtors/httpj"
 
 [tool.hatch.version]
 path = "httpj/__version__.py"
@@ -90,11 +91,11 @@ path = "CHANGELOG.md"
 pattern = "\n(###.+?\n)## "
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
-text = "\n---\n\n[Full changelog](https://github.com/encode/httpj/blob/master/CHANGELOG.md)\n"
+text = "\n---\n\n[Full changelog](https://github.com/gtors/httpj/blob/master/CHANGELOG.md)\n"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = 'src="(docs/img/.*?)"'
-replacement = 'src="https://raw.githubusercontent.com/encode/httpj/master/\1"'
+replacement = 'src="https://raw.githubusercontent.com/gtors/httpj/master/\1"'
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "PIE"]
