@@ -55,11 +55,11 @@ $ pip install 'httpj[cli]'
 
 Which now allows us to use HTTPJ directly from the command-line...
 
-![httpj --help](img/httpj-help.png)
+![httpj --help](img/httpx-help.png)
 
 Sending a request...
 
-![httpj http://httpbin.org/json](img/httpj-request.png)
+![httpj http://httpbin.org/json](img/httpx-request.png)
 
 ## Features
 
