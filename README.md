@@ -21,7 +21,7 @@
 Install HTTPJ using pip:
 
 ```shell
-$ pip install httpj
+pip install httpj
 ```
 
 Now, let's get started:
