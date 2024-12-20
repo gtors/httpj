@@ -8,21 +8,22 @@ from ._config import DEFAULT_TIMEOUT_CONFIG
 from ._models import Response
 from ._types import (
     AuthTypes,
-    CertTypes,
     CookieTypes,
     HeaderTypes,
     JSONDecoder,
     JSONEncoder,
-    ProxiesTypes,
     ProxyTypes,
     QueryParamTypes,
     RequestContent,
     RequestData,
     RequestFiles,
     TimeoutTypes,
-    VerifyTypes,
 )
 from ._urls import URL
+
+if typing.TYPE_CHECKING:
+    import ssl  # pragma: no cover
+
 
 __all__ = [
     "delete",
@@ -52,11 +53,9 @@ def request(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     follow_redirects: bool = False,
-    verify: VerifyTypes = True,
-    cert: CertTypes | None = None,
+    verify: ssl.SSLContext | str | bool = True,
     trust_env: bool = True,
 ) -> Response:
     """
@@ -84,18 +83,12 @@ def request(
     * **auth** - *(optional)* An authentication class to use when sending the
     request.
     * **proxy** - *(optional)* A proxy URL where all the traffic should be routed.
-    * **proxies** - *(optional)* A dictionary mapping proxy keys to proxy URLs.
     * **timeout** - *(optional)* The timeout configuration to use when sending
     the request.
     * **follow_redirects** - *(optional)* Enables or disables HTTP redirects.
-    * **verify** - *(optional)* SSL certificates (a.k.a CA bundle) used to
-    verify the identity of requested hosts. Either `True` (default CA bundle),
-    a path to an SSL certificate file, an `ssl.SSLContext`, or `False`
-    (which will disable verification).
-    * **cert** - *(optional)* An SSL certificate used by the requested host
-    to authenticate the client. Either a path to an SSL certificate file, or
-    two-tuple of (certificate file, key file), or a three-tuple of (certificate
-    file, key file, password).
+    * **verify** - *(optional)* Either `True` to use an SSL context with the
+    default CA bundle, `False` to disable verification, or an instance of
+    `ssl.SSLContext` to use a custom context.
     * **trust_env** - *(optional)* Enables or disables usage of environment
     variables for configuration.
 
@@ -113,8 +106,6 @@ def request(
     with Client(
         cookies=cookies,
         proxy=proxy,
-        proxies=proxies,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -151,11 +142,9 @@ def stream(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     follow_redirects: bool = False,
-    verify: VerifyTypes = True,
-    cert: CertTypes | None = None,
+    verify: ssl.SSLContext | str | bool = True,
     trust_env: bool = True,
 ) -> typing.Iterator[Response]:
     """
@@ -171,8 +160,6 @@ def stream(
     with Client(
         cookies=cookies,
         proxy=proxy,
-        proxies=proxies,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -202,10 +189,8 @@ def get(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
     json_deserialize: JSONDecoder | None = None,
@@ -226,9 +211,7 @@ def get(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -244,10 +227,8 @@ def options(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
     json_deserialize: JSONDecoder | None = None,
@@ -268,9 +249,7 @@ def options(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -286,10 +265,8 @@ def head(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
     json_deserialize: JSONDecoder | None = None,
@@ -310,9 +287,7 @@ def head(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -334,10 +309,8 @@ def post(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
 ) -> Response:
@@ -360,9 +333,7 @@ def post(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -383,10 +354,8 @@ def put(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
 ) -> Response:
@@ -409,9 +378,7 @@ def put(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -432,10 +399,8 @@ def patch(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
+    verify: ssl.SSLContext | str | bool = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
     trust_env: bool = True,
 ) -> Response:
@@ -458,9 +423,7 @@ def patch(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,
@@ -475,11 +438,9 @@ def delete(
     cookies: CookieTypes | None = None,
     auth: AuthTypes | None = None,
     proxy: ProxyTypes | None = None,
-    proxies: ProxiesTypes | None = None,
     follow_redirects: bool = False,
-    cert: CertTypes | None = None,
-    verify: VerifyTypes = True,
     timeout: TimeoutTypes = DEFAULT_TIMEOUT_CONFIG,
+    verify: ssl.SSLContext | str | bool = True,
     trust_env: bool = True,
     json_deserialize: JSONDecoder | None = None,
 ) -> Response:
@@ -499,9 +460,7 @@ def delete(
         cookies=cookies,
         auth=auth,
         proxy=proxy,
-        proxies=proxies,
         follow_redirects=follow_redirects,
-        cert=cert,
         verify=verify,
         timeout=timeout,
         trust_env=trust_env,

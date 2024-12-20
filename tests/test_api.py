@@ -85,3 +85,18 @@ def test_stream(server):
 def test_get_invalid_url():
     with pytest.raises(httpj.UnsupportedProtocol):
         httpj.get("invalid://example.org")
+
+
+# check that httpcore isn't imported until we do a request
+def test_httpcore_lazy_loading(server):
+    import sys
+
+    # unload our module if it is already loaded
+    if "httpj" in sys.modules:
+        del sys.modules["httpj"]
+        del sys.modules["httpcore"]
+    import httpj
+
+    assert "httpcore" not in sys.modules
+    _response = httpj.get(server.url)
+    assert "httpcore" in sys.modules

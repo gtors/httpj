@@ -28,7 +28,7 @@ HTTPJ is a fully featured HTTP client for Python 3, which provides sync and asyn
 Install HTTPJ using pip:
 
 ```shell
-pip install httpj
+$ pip install httpj
 ```
 
 Now, let's get started:
@@ -50,7 +50,7 @@ Or, using the command-line client.
 
 ```shell
 # The command line client is an optional dependency.
-pip install 'httpj[cli]'
+$ pip install 'httpx[cli]'
 ```
 
 Which now allows us to use HTTPJ directly from the command-line...
@@ -130,19 +130,19 @@ inspiration around the lower-level networking details.
 Install with pip:
 
 ```shell
-pip install httpj
+$ pip install httpj
 ```
 
 Or, to include the optional HTTP/2 support, use:
 
 ```shell
-pip install httpj[http2]
+$ pip install httpj[http2]
 ```
 
 To include the optional brotli and zstandard decoders support, use:
 
 ```shell
-pip install httpj[brotli,zstd]
+$ pip install httpj[brotli,zstd]
 ```
 
 HTTPJ requires Python 3.8+

@@ -9,22 +9,23 @@
 chardet==5.2.0
 
 # Documentation
-mkdocs==1.6.0
+mkdocs==1.6.1
 mkautodoc==0.2.0
-mkdocs-material==9.5.30
+mkdocs-material==9.5.47
 
 # Packaging
-build==1.2.1
-twine==5.1.1
+build==1.2.2.post1
+twine==6.0.1
 
 # Tests & Linting
-coverage[toml]==7.6.0
-cryptography==43.0.0
-mypy==1.11.0
-pytest==8.3.1
-ruff==0.5.4
-trio==0.26.0
+orjson
+coverage[toml]==7.6.1
+cryptography==44.0.0
+mypy==1.13.0
+pytest==8.3.4
+ruff==0.8.1
+trio==0.27.0
 trio-typing==0.10.0
-trustme==1.1.0
-uvicorn==0.30.3
-orjson==3.10.7
+trustme==1.1.0; python_version < '3.9'
+trustme==1.2.0; python_version >= '3.9'
+uvicorn==0.32.1

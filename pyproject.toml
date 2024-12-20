@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "httpj"
-description = "A fork of httpx with support for a custom JSON serializer"
+description = "HTTPX fork with custom JSON serializer support"
 license = "BSD-3-Clause"
 requires-python = ">=3.8"
 authors = [
@@ -33,7 +33,6 @@ dependencies = [
     "httpcore==1.*",
     "anyio",
     "idna",
-    "sniffio",
 ]
 dynamic = ["readme", "version"]
 
@@ -130,5 +129,5 @@ markers = [
 ]
 
 [tool.coverage.run]
-omit = ["venv/*", "httpj/_compat.py"]
+omit = ["venv/*"]
 include = ["httpj/*", "tests/*"]

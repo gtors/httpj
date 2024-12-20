@@ -28,7 +28,7 @@ trying out our HTTP/2 support. You can do so by first making sure to install
 the optional HTTP/2 dependencies...
 
 ```shell
-pip install httpj[http2]
+$ pip install httpj[http2]
 ```
 
 And then instantiating a client with HTTP/2 support enabled:

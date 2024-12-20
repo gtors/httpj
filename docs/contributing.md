@@ -46,14 +46,14 @@ Then clone your fork with the following command replacing `YOUR-USERNAME` with
 your GitHub username:
 
 ```shell
-git clone https://github.com/YOUR-USERNAME/httpj
+$ git clone https://github.com/YOUR-USERNAME/httpj
 ```
 
 You can now install the project and its dependencies using:
 
 ```shell
-cd httpj
-scripts/install
+$ cd httpj
+$ scripts/install
 ```
 
 ## Testing and Linting
@@ -64,7 +64,7 @@ and documentation building workflow.
 To run the tests, use:
 
 ```shell
-scripts/test
+$ scripts/test
 ```
 
 !!! warning
@@ -76,19 +76,19 @@ Any additional arguments will be passed to `pytest`. See the [pytest documentati
 For example, to run a single test script:
 
 ```shell
-scripts/test tests/test_multipart.py
+$ scripts/test tests/test_multipart.py
 ```
 
 To run the code auto-formatting:
 
 ```shell
-scripts/lint
+$ scripts/lint
 ```
 
 Lastly, to run code checks separately (they are also run as part of `scripts/test`), run:
 
 ```shell
-scripts/check
+$ scripts/check
 ```
 
 ## Documenting
@@ -98,7 +98,7 @@ Documentation pages are located under the `docs/` folder.
 To run the documentation site locally (useful for previewing changes), use:
 
 ```shell
-scripts/docs
+$ scripts/docs
 ```
 
 ## Resolving Build / CI Failures
@@ -107,7 +107,7 @@ Once you've submitted your pull request, the test suite will automatically run, 
 If the test suite fails, you'll want to click through to the "Details" link, and try to identify why the test suite failed.
 
 <p align="center" style="margin: 0 0 10px">
-  <img src="https://raw.githubusercontent.com/encode/httpj/master/docs/img/gh-actions-fail.png" alt='Failing PR commit status'>
+  <img src="https://raw.githubusercontent.com/gtors/httpj/master/docs/img/gh-actions-fail.png" alt='Failing PR commit status'>
 </p>
 
 Here are some common ways the test suite can fail:
@@ -115,14 +115,14 @@ Here are some common ways the test suite can fail:
 ### Check Job Failed
 
 <p align="center" style="margin: 0 0 10px">
-  <img src="https://raw.githubusercontent.com/encode/httpj/master/docs/img/gh-actions-fail-check.png" alt='Failing GitHub action lint job'>
+  <img src="https://raw.githubusercontent.com/gtors/httpj/master/docs/img/gh-actions-fail-check.png" alt='Failing GitHub action lint job'>
 </p>
 
 This job failing means there is either a code formatting issue or type-annotation issue.
 You can look at the job output to figure out why it's failed or within a shell run:
 
 ```shell
-scripts/check
+$ scripts/check
 ```
 
 It may be worth it to run `$ scripts/lint` to attempt auto-formatting the code
@@ -136,7 +136,7 @@ a variety of reasons like invalid markdown or missing configuration within `mkdo
 ### Python 3.X Job Failed
 
 <p align="center" style="margin: 0 0 10px">
-  <img src="https://raw.githubusercontent.com/encode/httpj/master/docs/img/gh-actions-fail-test.png" alt='Failing GitHub action test job'>
+  <img src="https://raw.githubusercontent.com/gtors/httpj/master/docs/img/gh-actions-fail-test.png" alt='Failing GitHub action test job'>
 </p>
 
 This job failing means the unit tests failed or not all code paths are covered by unit tests.
@@ -158,17 +158,17 @@ Before releasing a new version, create a pull request that includes:
 
 - **An update to the changelog**:
     - We follow the format from [keepachangelog](https://keepachangelog.com/en/1.0.0/).
-    - [Compare](https://github.com/encode/httpj/compare/) `master` with the tag of the latest release, and list all entries that are of interest to our users:
+    - [Compare](https://github.com/gtors/httpj/compare/) `master` with the tag of the latest release, and list all entries that are of interest to our users:
         - Things that **must** go in the changelog: added, changed, deprecated or removed features, and bug fixes.
         - Things that **should not** go in the changelog: changes to documentation, tests or tooling.
         - Try sorting entries in descending order of impact / importance.
         - Keep it concise and to-the-point. 🎯
 - **A version bump**: see `__version__.py`.
 
-For an example, see [#1006](https://github.com/encode/httpj/pull/1006).
+For an example, see [#1006](https://github.com/gtors/httpj/pull/1006).
 
 Once the release PR is merged, create a
-[new release](https://github.com/encode/httpj/releases/new) including:
+[new release](https://github.com/gtors/httpj/releases/new) including:
 
 - Tag version like `0.13.3`.
 - Release title `Version 0.13.3`
@@ -210,12 +210,9 @@ configure HTTPJ as described in the
 the [SSL certificates section](https://www.python-httpx.org/advanced/ssl/),
 this is where our previously generated `client.pem` comes in:
 
-```
-import httpj
-
-with httpj.Client(proxy="http://127.0.0.1:8080/", verify="/path/to/client.pem") as client:
-    response = client.get("https://example.org")
-    print(response.status_code)  # should print 200
+```python
+ctx = ssl.create_default_context(cafile="/path/to/client.pem")
+client = httpj.Client(proxy="http://127.0.0.1:8080/", verify=ctx)
 ```
 
 Note, however, that HTTPS requests will only succeed to the host specified

@@ -73,7 +73,7 @@ This is an optional feature that requires an additional third-party library be i
 You can install SOCKS support using `pip`:
 
 ```shell
-pip install httpj[socks]
+$ pip install httpj[socks]
 ```
 
 You can now configure a client to make requests via a proxy using the SOCKS protocol:

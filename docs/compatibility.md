@@ -10,7 +10,7 @@ This documentation outlines places where the API differs...
 Unlike `requests`, HTTPJ does **not follow redirects by default**.
 
 We differ in behaviour here [because auto-redirects can easily mask unnecessary network
-calls being made](https://github.com/encode/httpj/discussions/1785).
+calls being made](https://github.com/encode/httpx/discussions/1785).
 
 You can still enable behaviour to automatically follow redirects, but you need to
 do so explicitly...
@@ -143,7 +143,7 @@ Within a `stream()` block request data is made available with:
 * `.iter_text()` - Instead of `response.iter_content(decode_unicode=True)`
 * `.iter_lines()` - Corresponding to `response.iter_lines()`
 * `.iter_raw()` - Use this instead of `response.raw`
-* `.read()` - Read the entire response body, making `request.text` and `response.content` available.
+* `.read()` - Read the entire response body, making `response.text` and `response.content` available.
 
 ## Timeouts
 
@@ -171,11 +171,9 @@ Also note that `requests.Session.request(...)` allows a `proxies=...` parameter,
 
 ## SSL configuration
 
-When using a `Client` instance, the `trust_env`, `verify`, and `cert` arguments should always be passed on client instantiation, rather than passed to the request method.
+When using a `Client` instance, the ssl configurations should always be passed on client instantiation, rather than passed to the request method.
 
 If you need more than one different SSL configuration, you should use different client instances for each SSL configuration.
-
-Requests supports `REQUESTS_CA_BUNDLE` which points to either a file or a directory. HTTPJ supports the `SSL_CERT_FILE` (for a file) and `SSL_CERT_DIR` (for a directory) OpenSSL variables instead.
 
 ## Request body on HTTP methods
 

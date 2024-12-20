@@ -3,7 +3,14 @@ from __future__ import annotations
 import inspect
 import warnings
 from json import dumps as json_dumps
-from typing import Any, AsyncIterable, AsyncIterator, Iterable, Iterator, Mapping
+from typing import (
+    Any,
+    AsyncIterable,
+    AsyncIterator,
+    Iterable,
+    Iterator,
+    Mapping,
+)
 from urllib.parse import urlencode
 
 from ._exceptions import StreamClosed, StreamConsumed
@@ -170,10 +177,16 @@ def encode_html(html: str) -> tuple[dict[str, str], ByteStream]:
 def encode_json(
     json: Any, json_serialize: JSONEncoder | None = None
 ) -> tuple[dict[str, str], ByteStream]:
-    json_serialize = json_serialize or json_dumps
-    body = json_serialize(json)
+    if json_serialize:
+        body = json_serialize(json)
+    else:
+        body = json_dumps(
+            json, ensure_ascii=False, separators=(",", ":"), allow_nan=False
+        )
+
     if isinstance(body, str):
         body = body.encode("utf-8")
+
     content_length = str(len(body))
     content_type = "application/json"
     headers = {"Content-Length": content_length, "Content-Type": content_type}
@@ -201,7 +214,7 @@ def encode_request(
         # `data=<bytes...>` usages. We deal with that case here, treating it
         # as if `content=<...>` had been supplied instead.
         message = "Use 'content=<...>' to upload raw bytes/text content."
-        warnings.warn(message, DeprecationWarning)
+        warnings.warn(message, DeprecationWarning, stacklevel=2)
         return encode_content(data)
 
     if content is not None:

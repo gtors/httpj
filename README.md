@@ -2,7 +2,7 @@
   <a href="https://www.python-httpx.org/"><img width="350" height="208" src="https://raw.githubusercontent.com/gtors/httpj/master/docs/img/butterfly.png" alt='HTTPJ'></a>
 </p>
 
-<p align="center"><strong>HTTPJ</strong> <em>-A fork of httpx with support for a custom JSON serializer.</em></p>
+<p align="center"><strong>HTTPJ</strong> <em>HTTPX fork with custom JSON serializer support.</em></p>
 
 <p align="center">
 <a href="https://github.com/gtors/httpj/actions">
